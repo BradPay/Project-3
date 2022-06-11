@@ -1,0 +1,21 @@
+﻿@model Project_3.Models.InvoiceLineItem
+
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2>Add Invoice Line Items</h2>
+
+@using (Html.BeginForm("Upsert", "InvoiceLineItems", FormMethod.Post))
+{
+    @Html.TextBoxFor(ii => ii.InvoiceID, new { @class = "form-control", placeholder = "Invoice ID" })
+    @Html.TextBoxFor(ii => ii.ProductCode, new { @class = "form-control", placeholder = "Product Code" })
+    @Html.TextBoxFor(ii => ii.UnitPrice, new { @class = "form-control", placeholder = "Unit Price" })
+    @Html.TextBoxFor(ii => ii.Quantity, new { @class = "form-control", placeholder = "Quantity" })
+    @Html.TextBoxFor(ii => ii.ItemTotal, new { @class = "form-control", placeholder = "Item Total" })
+
+
+    <input type="submit" value="submit" class="btn btn-info" />
+    <input type="button" value="Delete" class="btn btn-danger" onclick="apiHandler.DELETE('/InvoiceLineItem/Delete/@Model.InvoiceID');" />
+}
+

@@ -1,0 +1,96 @@
+﻿@model List<Project_3.Models.Invoice>
+@{
+    ViewBag.Title = "All";
+}
+
+<h2>All Invoices</h2>
+
+<a href="/Invoices/Upsert">Add New</a>
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-6">
+        <input id="txtSearch" type="text" class="form-control" placeholder="Search..." />
+        <input type="button" class="btn btn-info" value="Search" onclick="search();" />
+    </div>
+</div>
+
+<table class="sortable table table-hover">
+    <thead>
+        <tr>
+            <th onclick="sort(1);">Invoice Id</th>
+            <th onclick="sort(2);">Customer ID</th>
+            <th onclick="sort(3);">Invoice Date</th>
+            <th onclick="sort(4);">Product Total</th>
+            <th onclick="sort(5);">Sales Tax</th>
+            <th onclick="sort(6);">Shipping</th>
+            <th onclick="sort(7);">Invoice Total</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+        <tr>
+            <td>@invoice.InvoiceID</td>
+            <td>@invoice.CustomerID</td>
+            <td>@invoice.InvoiceDate</td>
+            <td>@invoice.ProductTotal</td>
+            <td>@invoice.SalesTax</td>
+            <td>@invoice.Shipping</td>
+            <td>@invoice.InvoiceTotal</td>
+            <td>
+                <a href="/Invoices/Upsert/@invoice.InvoiceID">Edit</a>
+                <a href="/Invoices/Delete/@invoice.InvoiceID">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function sort(sortBy) {
+        let isDesc = false;
+
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var isDescUrlParam = url.searchParams.get("isDesc");
+
+        if (isDescUrlParam == "false") {
+            isDesc = true;
+        }
+
+        window.location.href = "/Invoices/All/?sortBy=" + sortBy + "&isDesc=" + isDesc;
+    }
+    function search() {
+        var searchKey = $('#txtSearch').val();
+
+        $('.sortable tbody tr').each(function () {
+            var currentText = $(this).text();
+
+            if (currentText.toLowerCase().indexOf(searchKey.toLowerCase()) == -1) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+    }
+</script>

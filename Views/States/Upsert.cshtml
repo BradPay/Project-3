@@ -1,0 +1,17 @@
+﻿@model Project_3.Models.State
+
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2>Add State</h2>
+
+@using (Html.BeginForm("Upsert", "States", FormMethod.Post))
+{
+    @Html.TextBoxFor(st => st.StateCode, new { @class = "form-control", placeholder = "State Code" })
+    @Html.TextBoxFor(st => st.StateName, new { @class = "form-control", placeholder = "State Name" })
+
+
+    <input type="submit" value="submit" class="btn btn-info" />
+    <input type="button" value="Delete" class="btn btn-danger" onclick="apiHandler.DELETE('/States/Delete/@Model.StateCode');" />
+}

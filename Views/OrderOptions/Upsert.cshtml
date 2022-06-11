@@ -1,0 +1,19 @@
+﻿@model Project_3.Models.OrderOption
+
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2>Add Order Options</h2>
+
+@using (Html.BeginForm("Upsert", "OrderOptions", FormMethod.Post))
+{
+    @Html.TextBoxFor(or => or.SalesTaxRate, new { @class = "form-control", placeholder = "Sales Tax Rate" })
+    @Html.TextBoxFor(or => or.FirstBookShipCharge, new { @class = "form-control", placeholder = "First Book Ship Charge" })
+    @Html.TextBoxFor(or => or.AdditionalBookShipCharge, new { @class = "form-control", placeholder = "Additional Book Ship Charge" })
+
+
+
+    <input type="submit" value="submit" class="btn btn-info" />
+    <input type="button" value="Delete" class="btn btn-danger" onclick="apiHandler.DELETE('/OrderOptions/Delete/@Model.SalesTaxRate');" />
+}

@@ -1,0 +1,82 @@
+﻿@model List<Project_3.Models.State>
+@{
+    ViewBag.Title = "All";
+}
+
+<h2>All States</h2>
+
+<a href="/States/Upsert">Add New</a>
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-6">
+        <input id="txtSearch" type="text" class="form-control" placeholder="Search..." />
+        <input type="button" class="btn btn-info" value="Search" onclick="search();" />
+    </div>
+</div>
+
+<table class="sortable table table-hover">
+    <thead>
+        <tr>
+            <th onclick="sort(1);">State Code</th>
+            <th onclick="sort(2);">State Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var state in Model)
+        {
+            <tr>
+                <td>@state.StateCode</td>
+                <td>@state.StateName</td>
+                <td>
+                    <a href="/States/Upsert/@state.StateCode">Edit</a>
+                    <a href="/States/Delete/@state.StateCode">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function sort(sortBy) {
+        let isDesc = false;
+
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var isDescUrlParam = url.searchParams.get("isDesc");
+
+        if (isDescUrlParam == "false") {
+            isDesc = true;
+        }
+
+        window.location.href = "/States/All/?sortBy=" + sortBy + "&isDesc=" + isDesc;
+    }
+    function search() {
+        var searchKey = $('#txtSearch').val();
+
+        $('.sortable tbody tr').each(function () {
+            var currentText = $(this).text();
+
+            if (currentText.toLowerCase().indexOf(searchKey.toLowerCase()) == -1) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+    }
+</script>
+

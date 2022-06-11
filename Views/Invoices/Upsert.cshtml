@@ -1,0 +1,23 @@
+﻿@model Project_3.Models.Invoice
+
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2>Add Invoice</h2>
+
+@using (Html.BeginForm("Upsert", "Invoices", FormMethod.Post))
+{
+    @Html.TextBoxFor(iv => iv.InvoiceID, new { @class = "form-control", placeholder = "Invoice ID" })
+    @Html.TextBoxFor(iv => iv.CustomerID, new { @class = "form-control", placeholder = "Customer ID" })
+    @Html.TextBoxFor(iv => iv.InvoiceDate, new { @class = "form-control", placeholder = "Invoice Date" })
+    @Html.TextBoxFor(iv => iv.ProductTotal, new { @class = "form-control", placeholder = "Product Total" })
+    @Html.TextBoxFor(iv => iv.SalesTax, new { @class = "form-control", placeholder = "Sales Tax" })
+    @Html.TextBoxFor(iv => iv.Shipping, new { @class = "form-control", placeholder = "Shipping" })
+    @Html.TextBoxFor(iv => iv.InvoiceTotal, new { @class = "form-control", placeholder = "Invoice Total" })
+
+
+
+    <input type="submit" value="submit" class="btn btn-info" />
+    <input type="button" value="Delete" class="btn btn-danger" onclick="apiHandler.DELETE('/Invoices/Delete/@Model.InvoiceID');" />
+}

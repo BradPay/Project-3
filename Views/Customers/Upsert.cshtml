@@ -1,0 +1,33 @@
+﻿@model Project_3.Models.UpsertCustomerModel
+
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2>Add Customer</h2>
+
+@using (Html.BeginForm("Upsert", "Customers", FormMethod.Post))
+{
+    @Html.TextBoxFor(cm => cm.Customer.CustomerID, new { @class = "form-control", placeholder = "Customer ID" })
+    @Html.TextBoxFor(cm => cm.Customer.Name, new { @class = "form-control", placeholder = "Name" })
+    @Html.TextBoxFor(cm => cm.Customer.Address, new { @class = "form-control", placeholder = "Address" })
+    @Html.TextBoxFor(cm => cm.Customer.City, new { @class = "form-control", placeholder = "City" })
+    @Html.TextBoxFor(cm => cm.Customer.State, new { @class = "form-control", placeholder = "State" })
+    @Html.TextBoxFor(cm => cm.Customer.ZipCode, new { @class = "form-control", placeholder = "Zip Code" })
+
+
+    <input list="states" name="Customer.State" />
+
+    <datalist id="states">
+        @foreach (var state in Model.States)
+        {
+            <option value="@state.StateName (@state.StateCode)"></option>
+        }
+    </datalist>
+
+
+    <input type="submit" value="submit" class="btn btn-info" />
+    <input type="button" value="Delete" class="btn btn-danger" onclick="apiHandler.DELETE('/Customers/Delete/@Model.Customer.CustomerID');" />
+}
+
+

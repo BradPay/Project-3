@@ -1,0 +1,88 @@
+﻿@model List<Project_3.Models.OrderOption>
+@{
+    ViewBag.Title = "All";
+}
+
+<h2>All Order Options</h2>
+
+<a href="/OrderOptions/Upsert">Add New</a>
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-6">
+        <input id="txtSearch" type="text" class="form-control" placeholder="Search..." />
+        <input type="button" class="btn btn-info" value="Search" onclick="search();" />
+    </div>
+</div>
+
+<table class="sortable table table-hover">
+    <thead>
+        <tr>
+            <th onclick="sort(1);">Sales Tax Rate</th>
+            <th onclick="sort(2);">First Book Ship Charge</th>
+            <th onclick="sort(3);">Additional Book Ship Charge</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderOption in Model)
+        {
+            <tr>
+                <td>@orderOption.SalesTaxRate</td>
+                <td>@orderOption.FirstBookShipCharge</td>
+                <td>@orderOption.AdditionalBookShipCharge</td>
+                <td>
+                    <a href="/OrderOptions/Upsert/@orderOption.SalesTaxRate">Edit</a>
+                    <a href="/OrderOptions/Delete/@orderOption.SalesTaxRate">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function sort(sortBy) {
+        let isDesc = false;
+
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var isDescUrlParam = url.searchParams.get("isDesc");
+
+        if (isDescUrlParam == "false") {
+            isDesc = true;
+        }
+
+        window.location.href = "/OrderOptions/All/?sortBy=" + sortBy + "&isDesc=" + isDesc;
+    }
+    function search() {
+        var searchKey = $('#txtSearch').val();
+
+        $('.sortable tbody tr').each(function () {
+            var currentText = $(this).text();
+
+            if (currentText.toLowerCase().indexOf(searchKey.toLowerCase()) == -1) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+    }
+</script>
+
